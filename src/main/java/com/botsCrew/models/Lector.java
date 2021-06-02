@@ -3,21 +3,31 @@ package com.botsCrew.models;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Data
-@Table(name = "LECTOR")
+@Table(name = "lectors")
 public class Lector {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "name")
     private String name;
 
-    @Column(columnDefinition = "ENUM('ASSISTANT', 'ASSOCIATE_PROFESSOR', ' PROFESSOR')")
+    @Column(columnDefinition = "ENUM('ASSISTANT', 'ASSOCIATE_PROFESSOR', 'PROFESSOR')")
     @Enumerated(EnumType.STRING)
     private Degree degree;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "lector")
-    private List<Department> departments = new ArrayList<>();
+    @Column(name = "salary")
+    private int salary;
+
+    public Lector(String name, Degree degree, int salary) {
+        this.name = name;
+        this.degree = degree;
+        this.salary = salary;
+    }
+
+    public Lector() {
+    }
 }
